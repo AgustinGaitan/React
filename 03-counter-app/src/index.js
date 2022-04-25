@@ -9,7 +9,7 @@ import './index.css';
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 
 //root.render(<PrimeraApp saludo="Hola mundo"/>);
-root.render(<CounterApp value={23}/>);
+root.render(<CounterApp value={10}/>);
 
 // const root = ReactDOM.createRoot(document.querySelector('#root'));
 // const divRoot = document.querySelector('#root');
