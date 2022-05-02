@@ -6,7 +6,7 @@ export const GifExpertApp = () => {
 
 
     // lo de adentro/// la funcion para setear
-    const [categories, setCategories] = useState(['Cats','Dogs','Chinchillas']);
+    const [categories, setCategories] = useState(['Cats']);
 
     // const handleAdd = () =>{
     //     //setCategories( [...categories, 'Frogs'] );
@@ -18,7 +18,7 @@ export const GifExpertApp = () => {
   return (
     <>
         <h2>GifExpertApp</h2>
-        <AddCategory setCategories={setCategories} />
+        <AddCategory className="animate__bounce" setCategories={setCategories} />
         <hr/>
 
 
