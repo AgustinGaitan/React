@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom/client';
 // import { Padre } from './components/07-tarea-memo/Padre';
 // import { HookApp } from './HookApp';
 import { TodoApp } from './components/08-useReducer/TodoApp';
+import { MainApp } from './components/09-useContext/MainApp';
 import './index.css';
 
 
@@ -33,7 +34,8 @@ root.render(
   // <MemoHook />
   // <CallbackHook/>
   // <Padre/>
-    <TodoApp />
+  // <TodoApp />
+  <MainApp/>
 );
 
 
