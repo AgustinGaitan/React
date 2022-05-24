@@ -1,11 +1,14 @@
+import { useContext } from 'react';
 import { Link, NavLink, useNavigate} from 'react-router-dom';
-
+import { AuthContext } from '../../auth/authContext';
 
 
 export const Navbar = () => {
     
     const navigate = useNavigate();// para navegar entre rutas
-
+    const {user} = useContext(AuthContext); // uso el contexto para traer los datos (en este caso user)
+   
+    
     const handleLogout = () => {
         navigate('/login',{
             replace:true
@@ -58,7 +61,7 @@ export const Navbar = () => {
                     <span 
                         className='nav-item nav-link text-info'
                     > 
-                    Agustin
+                    {user.name} {/*uso el user.name del context*/}
                     
                     </span>
 
