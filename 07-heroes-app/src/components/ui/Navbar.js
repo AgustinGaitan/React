@@ -42,6 +42,13 @@ export const Navbar = () => {
                     >
                         DC
                     </NavLink>
+                    <NavLink 
+                        //Cambia la clase dependiendo de la prop isActive para que esté activo o no
+                        className={ ({isActive}) => 'nav-item nav-link ' + (isActive ? 'active' : '')} 
+                        to="/search"
+                    >
+                        Search
+                    </NavLink>
                 </div>
             </div>
 

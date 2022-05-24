@@ -5,7 +5,7 @@ import { getHeroById } from "../../selectors/getHeroById";
 
 export const HeroScreen = () => {
   
-  const {heroId} = useParams();
+  const {heroId} = useParams(); //Agarro el :heroId
   const navigate = useNavigate();
 
   const hero = useMemo( ()=> { //Se usa el useMemo para que no se ejecute devuelta en caso de que no sea necesario
