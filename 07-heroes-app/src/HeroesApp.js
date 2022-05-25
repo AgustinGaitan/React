@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { AppRouter } from './routers/AppRouter';
 import { AuthContext } from './auth/authContext';
 import { authReducer } from './auth/authReducer';
@@ -19,7 +19,16 @@ export const HeroesApp = () => {
   //const [state, dispatch] = useReducer(first, second, third)
   const [user, dispatch] = useReducer(authReducer, {}, init )
   
+  useEffect(() => {
+    
+    if( !user ) return;
 
+    localStorage.setItem('user', JSON.stringify(user));
+
+  }, [user]) 
+  
+  //En el provider mando la data que voy a querer usar dentro de los demas componentes. (en este caso el usuario 
+  //y la funcion dispatch)
   return (
     <AuthContext.Provider value={{
       user,
