@@ -20,7 +20,7 @@ import { types } from '../types/types';
 
 const login = createAction(types.login);
 const logout = createAction(types.logout);
-const initialState = {uid:123123123};
+const initialState = {};
 
 export const authReducer = createReducer(initialState, (builder) =>{
 
