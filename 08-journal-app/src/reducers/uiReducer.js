@@ -8,6 +8,8 @@ const initialState = {
 
 const setError = createAction(types.uiSetError);
 const removeError = createAction(types.uiRemoveError);
+const startLoading = createAction(types.uiStartLoading);
+const finishLoading = createAction(types.uiFinishLoading);
 
 export const uiReducer = createReducer(initialState, (builder) =>{
 
@@ -24,6 +26,17 @@ export const uiReducer = createReducer(initialState, (builder) =>{
         return {
             ...initialState,
             msgError: null
+        }
+    }).addCase(startLoading, (state = {}, action)=>{
+        return{
+            ...initialState,
+            loading:true
+        }
+
+    }).addCase(finishLoading, (state = {}, action )=>{
+        return{
+            ...initialState,
+            loading:false
         }
     })
     .addDefaultCase((state = {},action)=> initialState);
