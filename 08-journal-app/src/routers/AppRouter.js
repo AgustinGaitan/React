@@ -29,8 +29,11 @@ export const AppRouter = () => {
             if( user?.uid ){
                 dispatch(login(user.uid, user.displayName)); //aunque recargue sigue logueado
                 setIsLoggedIn(true);
+            }else {
+                setIsLoggedIn( false );
             }
 
+          
             setChecking(false);
 
         });
@@ -40,7 +43,7 @@ export const AppRouter = () => {
 
     if(checking){
         return(
-            <h1>Espere...</h1>
+            <h1>Wait...</h1>
         )
     }
 

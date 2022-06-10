@@ -12,16 +12,18 @@ import { Navigate, Redirect,Route} from 'react-router-dom';
 
 export const PublicRoute = ({
   isAuthenticated,
-  component:Component,
+  component: Component,
   ...rest
-})=>{
+}) => {
+
   return (
-    <Route {...rest}
-      component={(props) =>(
-        (isAuthenticated)
-        ? (<Redirect to="/"/>)
-        : (<Component{...props} /> )
-      )}
-    />
+      <Route { ...rest }
+          component={ (props) => (
+              ( isAuthenticated )
+                  ? ( <Redirect to="/" /> )
+                  : ( <Component { ...props } /> )
+          )}
+      
+      />
   )
 }

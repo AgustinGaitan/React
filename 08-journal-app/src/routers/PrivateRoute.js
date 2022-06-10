@@ -27,17 +27,19 @@ con el nombre children
 
 export const PrivateRoute = ({
   isAuthenticated,
-  component:Component,
+  component: Component,
   ...rest
-})=>{
+}) => {
+
   return (
-    <Route {...rest}
-      component={(props) =>(
-        (isAuthenticated)
-        ? (<Component{...props} />)
-        : ( <Redirect to="/auth/login"/>)
-      )}
-    />
+      <Route { ...rest }
+          component={ (props) => (
+              ( !isAuthenticated )
+                  ?   ( <Redirect to="/auth/login" /> )
+                  : ( <Component { ...props } /> )
+          )}
+      
+      />
   )
 }
 
