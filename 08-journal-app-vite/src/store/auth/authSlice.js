@@ -11,13 +11,23 @@ export const authSlice = createSlice({
             errorMessage: null
         },
         reducers: {
-           login: (state, action  ) => {
-                
+           login: (state, {payload}  ) => { //Obtiene todos los datos del payload (del dispatch)
+                state.status = 'authenticated', //'checking,'not-authenticated','authenticated' (estados)
+                state.uid=payload.uid;
+                state.email=payload.email;
+                state.displayName=payload.displayName;
+                state.photoURL= payload.photoURL;  
+                state.errorMessage= null;   
            },
-           logout:(state,payload) =>{
-
+           logout:(state,{payload}) =>{
+               state.status = 'not-authenticated', //'checking,'not-authenticated','authenticated' (estados)
+               state.uid=null;
+               state.email=null;
+               state.displayName=null;
+               state.photoURL= null;
+               state.errorMessage=  payload.errorMessage; //Obtiene SOLO el mensaje de error en caso de que haya que desloguear
            },
-           checkingCredentials: (state) =>{
+           checkingCredentials: (state) =>{ //Status intermedio
                state.status = 'checking';
            }
         }

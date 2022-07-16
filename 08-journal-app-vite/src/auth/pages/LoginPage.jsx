@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link as RouterLink} from 'react-router-dom';
 import { Google } from '@mui/icons-material';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
@@ -8,11 +9,18 @@ import { checkingAuthentication, startGoogleSignIn } from '../../store/auth';
 
 export const LoginPage = () => {
 
+  //Obtengo el status 
+  const { status } = useSelector(state => state.auth);
+
   const dispatch = useDispatch();
   const {email,password, onInputChange} =useForm({
     email:'agustin@gmail.com',
     password:'123456'
   });
+
+
+  //isAuthenticataing se usa en el login y el de Google para disablear
+  const isAuthenticating = useMemo( () => status === 'checking', [status]); //Si el status cambia se va a obtener el nuevo valor
 
   const onSubmit = (event) =>{
     event.preventDefault();
@@ -62,6 +70,7 @@ export const LoginPage = () => {
                   type="submit"
                   variant='contained'
                   fullWidth
+                  disabled ={isAuthenticating} //Si el status es "checking" está disabled
                 >
                   Login
                 </Button>
@@ -72,6 +81,7 @@ export const LoginPage = () => {
                   variant='contained'
                   fullWidth
                   onClick={onGoogleSignIn}
+                  disabled ={isAuthenticating} //Si el status es "checking" está disabled
                 >
                   <Google/>
                   <Typography sx={{ml: 1}}>Google</Typography>
