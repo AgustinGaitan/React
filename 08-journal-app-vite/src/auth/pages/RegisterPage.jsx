@@ -9,9 +9,31 @@ const formData={
   displayName:'Agustin Gaitan'
 }
 
+//Validacion casera
+const formValidations ={
+  email:[(value)=> value.includes('@'), 'El correo debe de tener una @'],
+  password:[(value)=> value.lenght >= 6, 'La contraseña debe de tener más de 6 letras.'],
+  displayName:[(value)=> value.lenght <= 1, 'El nombre es obligatorio']
+  
+}
+
+
 export const RegisterPage = () => {
 
-  const {displayName, email,password, onInputChange, formState} = useForm(formData);
+  const {
+    displayName, 
+    email,
+    password, 
+    onInputChange, 
+    formState,
+    isFormValid,
+    displayNameValid,
+    emailValid,
+    passwordValid
+  
+  } = useForm(formData, formValidations);
+
+  console.log(displayNameValid);
 
   const onSubmit = (event) =>{
     event.preventDefault(); 
@@ -32,6 +54,8 @@ export const RegisterPage = () => {
                 name='displayName'
                 value={displayName}
                 onChange={onInputChange}
+                error={ !displayNameValid }
+                helperText={displayNameValid}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt:2}}>
