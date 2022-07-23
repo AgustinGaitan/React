@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import {Link as RouterLink} from 'react-router-dom';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { startCreatingUserWithEmailPassowrd } from '../../store/auth';
+import { useMemo } from 'react';
 
 const formData={
   email:'',
@@ -21,7 +24,12 @@ const formValidations ={
 
 export const RegisterPage = () => {
 
+  const dispatch = useDispatch();
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+
+  const {status, errorMessage} = useSelector(state => state.auth);
+  const isCheckingAuthentication = useMemo( ()=> status === 'checking',[status]);
 
   const {
     displayName, 
@@ -40,15 +48,16 @@ export const RegisterPage = () => {
 
   const onSubmit = (event) =>{
     event.preventDefault(); 
-
+    
     setFormSubmitted(true);
-    console.log(formState);
+    if(!isFormValid) return;
+    
+    dispatch(startCreatingUserWithEmailPassowrd(formState));
 
   }
 
   return (
     <AuthLayout title='Crear cuenta'>
-      <h1>FormValid {isFormValid ? 'Valido': 'Incorrecto'}</h1>
         <form onSubmit={onSubmit}>
           <Grid container>
             <Grid item xs={12} sx={{ mt:2}}>
@@ -93,8 +102,23 @@ export const RegisterPage = () => {
             </Grid>
 
             <Grid container spacing={2} sx={{mb:2, mt:1}}>
+
+              <Grid 
+                item 
+                xs={12}
+                display={!!errorMessage ? '':'none'} //doble negacion significa que pasa de null a false y de false a true.
+              >
+                <Alert
+                  severity='error'
+                >
+                  {errorMessage}
+                </Alert>
+              </Grid>
+
+
               <Grid item xs={12}>
                 <Button
+                  disabled={isCheckingAuthentication}
                   type='submit'
                   variant='contained'
                   fullWidth
