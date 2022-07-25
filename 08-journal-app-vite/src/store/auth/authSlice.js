@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const authSlice = createSlice({
        name: 'auth',
        initialState: {
-            status: 'not-authenticated', //'checking,'not-authenticated','authenticated' (estados)
+            status: 'checking', //'checking,'not-authenticated','authenticated' (estados)
             uid:null,
             email:null,
             displayName:null,
@@ -25,7 +25,7 @@ export const authSlice = createSlice({
                state.email=null;
                state.displayName=null;
                state.photoURL= null;
-               state.errorMessage=  payload.errorMessage; //Obtiene SOLO el mensaje de error en caso de que haya que desloguear
+               state.errorMessage=  payload?.errorMessage; //Obtiene SOLO el mensaje de error en caso de que haya que desloguear
            },
            checkingCredentials: (state) =>{ //Status intermedio
                state.status = 'checking';

@@ -6,7 +6,7 @@ import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material'
 import { AuthLayout } from '../layout/AuthLayout';
 import {useForm} from '../../hooks';
 import {startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth';
-import { loginWithEmailPassword } from '../../firebase/providers';
+
 
 export const LoginPage = () => {
 
@@ -15,15 +15,13 @@ export const LoginPage = () => {
 
   const dispatch = useDispatch();
   const {email,password, onInputChange} =useForm({
-    email:'agustin@gmail.com',
-    password:'123456'
+    email:'',
+    password:''
   });
 
 
   //isAuthenticataing se usa en el login y el de Google para disablear
   const isAuthenticating = useMemo( () => status === 'checking', [status]); //Si el status cambia se va a obtener el nuevo valor
-
-
 
   const onSubmit = (event) =>{
     event.preventDefault();
@@ -39,7 +37,7 @@ export const LoginPage = () => {
 
   return (
     <AuthLayout title='Login'>
-        <form onSubmit ={ onSubmit }>
+        <form onSubmit ={ onSubmit } className='animate__animated animate__fadeIn animate__faster'>
           <Grid container>
             <Grid item xs={12} sx={{ mt:2}}>
               <TextField 
@@ -65,11 +63,14 @@ export const LoginPage = () => {
               />
             </Grid>
 
-            <Grid container>
+            <Grid container
+              display={!!errorMessage ? '':'none'}
+              sx={{mt:1}}
+            >
             <Grid 
                 item 
                 xs={12}
-                display={!!errorMessage ? '':'none'} //doble negacion significa que pasa de null a false y de false a true.
+                 //doble negacion significa que pasa de null a false y de false a true.
               >
                 <Alert
                   severity='error'
