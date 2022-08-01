@@ -1,7 +1,8 @@
 //Tareas asíncronas
 import { doc, setDoc,collection } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
-import { addNewEmpityNote, setActiveNote,savingNewNote } from './journalSlice';
+import { loadNotes } from '../../helpers';
+import { addNewEmpityNote, setActiveNote,savingNewNote, setNotes } from './journalSlice';
 
 export const startNewNote = () =>{
 
@@ -27,6 +28,21 @@ export const startNewNote = () =>{
         dispatch(addNewEmpityNote(newNote));
         dispatch(setActiveNote(newNote));
     
+    }
+
+}
+
+export const startLoadingNotes = () =>{
+
+    return async(dispatch, getState) => {
+
+        const {uid} = getState().auth; 
+
+        if( !uid ) throw new Error('El UID no existe');
+
+        const notes = await loadNotes( uid );
+
+        dispatch(setNotes(notes));
     }
 
 }

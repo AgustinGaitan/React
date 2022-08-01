@@ -20,7 +20,7 @@ export const journalSlice = createSlice({
                 state.isSaving = true;
             },
             addNewEmpityNote: (state, action)=>{
-                //No hace falta traer las notas anteriores (spread [...]
+                //No hace falta traer las notas anteriores (con el operador spread ...)
 
                 state.notes.push(action.payload);
                 state.isSaving = false;
@@ -30,8 +30,8 @@ export const journalSlice = createSlice({
 
             },
             setNotes: (state,action)=>{
-
-            },
+                state.notes = action.payload;
+            },  
             setSaving: (state)=>{
 
             },
