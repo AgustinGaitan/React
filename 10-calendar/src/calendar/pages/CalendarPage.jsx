@@ -2,29 +2,23 @@ import { useState } from 'react';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { addHours } from 'date-fns';
-import { Navbar, CalendarEvent, CalendarModal } from '../';
+
+import { Navbar, CalendarEvent, CalendarModal, FabAddNew } from '../';
 import { localizer, getMessagesES } from '../../helpers'; //Muchas menos importanciones importando todo desde el helper calendarLocalizer
+import { useCalendarStore, useUiStore } from '../../hooks';
 
 
-const events = [{
-  title:'Cumpleaños',
-  notes:'Nota de ejemplo',
-  start: new Date(),
-  end: addHours( new Date(), 2),
-  bgColor: '#fafafa',
-  user:{
-    _id:'123',
-    name:'Agustin'
-  }
-}]
+
 
 
 
 export const CalendarPage = () => {
 
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week') //Si recargo, obtiene la ultima vista, sino va a semana
-  
+
+  const {openDateModal} = useUiStore();
+  const {events, setActiveEvent} = useCalendarStore();
+
   const eventStyleGetter= (event, start, end, isSelected) =>{
 
       const style = {
@@ -40,16 +34,17 @@ export const CalendarPage = () => {
 
   const onDoubleClick = (event) =>{ //Doble click
     console.log({doubleClick: event});
+    openDateModal();
   }
   const onSelect = (event) =>{ //Un solo click
 
-    console.log({click: event});
+    setActiveEvent(event);
   }
 
   const onViewChanged = (event) =>{
 
     localStorage.setItem('lastView', event);
-
+    setLastView(event);
   }
 
   return (
@@ -73,6 +68,8 @@ export const CalendarPage = () => {
         onView={onViewChanged} //cuando cambien de vista (Mes,Semana,Día,Agenda)
       />
       <CalendarModal/>
+
+      <FabAddNew/>
     </>
   )
 }
