@@ -25,7 +25,37 @@ export const calendarSlice = createSlice({
         reducers: {
             onSetActiveEvent:(state, {payload})=>{
                 state.activeEvent = payload;
+            },
+            onAddNewEvent: (state, {payload}) =>{
+                state.activeEvent = null;
+                state.events.push(payload);
+            },
+            onUpdateEvent: (state, {payload}) =>{
+
+                state.events = state.events.map( event =>{
+
+                    if(event._id == payload._id){ //Si el id del payload es igual al de un evento ya existente, se updatea el evento de la iteracion
+
+                        return payload;
+
+                    }
+
+                    return event;
+                });
+            },
+            onDeleteEvent: (state) =>{
+
+                if(state.activeEvent){
+                    //Retorno todos los que no sean iguales al que quiero borrar, entonces directamente no se guarda en el state.events
+                    state.events = state.events.filter( event => event._id !== state.activeEvent._id);
+                    state.activeEvent = null;
+                }
+
+                //acá no se usaría if(!state.activeEvent) return;  porque retornaría un nuevo estado vacio.
+
             }
+
+
         }
 });
-export const {onSetActiveEvent } = calendarSlice.actions;
+export const {onSetActiveEvent,onAddNewEvent, onUpdateEvent, onDeleteEvent } = calendarSlice.actions;
