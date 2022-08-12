@@ -4,7 +4,7 @@ const Usuario = require('../models/Usuario');
 const {generarJWT} = require('../helpers/jwt');
 
 //express.response por si el intellisense no funciona (en este caso desestructurado)
-//req request  res response
+
 
 const crearUsuario = async(req, res = response)=>{ 
 
@@ -24,7 +24,7 @@ const crearUsuario = async(req, res = response)=>{
         //Encriptar contraseña
 
         const salt = bcrypt.genSaltSync();
-        usuario.password = bcrypt.hashSync(password,salt);
+        usuario.password = bcrypt.hashSync(password,salt); //Encriptacion de contraseña
 
         await usuario.save();
         //Generar JWT
