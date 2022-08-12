@@ -22,7 +22,7 @@ app.use(express.json());
 
 //Rutas:
 app.use('/api/auth', require('./routes/auth')); //Todo lo que exporte routes/auth va a esa ruta (/api/auth/.....)
-
+app.use('/api/events', require('./routes/events'));
 
 //CRUD: Eventos en el calendario
 

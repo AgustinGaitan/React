@@ -1,13 +1,7 @@
-/*
-    Rutas:
-    host + api/auth/new   POST
-    host + api/auth/      POST
-    host + api/auth/renew GET
-*/
 const {Router} = require('express');
+const router = Router();
 const {check} = require('express-validator');
 const {validarCampos} = require('../middleware/validar-campos');
-const router = Router();
 const {crearUsuario, loginUsuario, revalidarToken} = require('../controllers/authController');
 const { validarJWT } = require('../middleware/validar-jwt');
 
