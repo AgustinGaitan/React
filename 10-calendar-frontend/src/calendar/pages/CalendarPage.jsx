@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 
 import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from '../';
 import { localizer, getMessagesES } from '../../helpers'; //Muchas menos importanciones importando todo desde el helper calendarLocalizer
-import { useCalendarStore, useUiStore } from '../../hooks';
+import { useAuthStore, useCalendarStore, useUiStore } from '../../hooks';
 
 
 
@@ -16,24 +16,28 @@ export const CalendarPage = () => {
 
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week') //Si recargo, obtiene la ultima vista, sino va a semana
 
+  const {user} = useAuthStore();
+
   const {openDateModal} = useUiStore();
-  const {events, setActiveEvent} = useCalendarStore();
+  const {events, setActiveEvent, startLoadingEvents} = useCalendarStore();
 
   const eventStyleGetter= (event, start, end, isSelected) =>{
 
-      const style = {
-        backgroundColor: '#347CF7',
-        borderRadius: '0px',
-        opacity:0.8,
-        color: 'white'
-      }
-      return {
-        style
-      }
+    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid); //Si es un evento del usuario actual
+
+    const style = {
+      backgroundColor: isMyEvent ? '#347CF7' : '#465660',
+      borderRadius: '0px',
+      opacity:0.8,
+      color: 'white'
+    }
+    return {
+      style
+    }
   }
 
   const onDoubleClick = (event) =>{ //Doble click
-    console.log({doubleClick: event});
+    // console.log({doubleClick: event});
     openDateModal();
   }
   const onSelect = (event) =>{ //Un solo click
@@ -46,6 +50,12 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event);
     setLastView(event);
   }
+
+  useEffect(() => { //Traigo los eventos una vez
+    startLoadingEvents();
+
+  }, [])
+  
 
   return (
     <>
