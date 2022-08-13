@@ -24,9 +24,11 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth')); //Todo lo que exporte routes/auth va a esa ruta (/api/auth/.....)
 app.use('/api/events', require('./routes/events'));
 
-//CRUD: Eventos en el calendario
+//Para no tener problemas al momento de hacer el deploy. EL host busca una carpeta llamada /auth/login
 
-
+app.get('*', (req,res)=>{ 
+    res.sendFile(__dirname + '/public/index.html')
+});
 
 
 //Escuchar peticiones
